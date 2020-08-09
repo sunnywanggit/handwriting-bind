@@ -12,19 +12,29 @@ function myBind(asThis) {
         throw new Error('bind 必须调用在函数身上')
     }
 
-    return function () {
+    function resultFunc () {
         var args2 = slice.call(arguments,0)
-        return thatFunc.apply(asThis,args.concat(args2))
+        return thatFunc.apply(
+            resultFunc.prototype.isPrototypeOf(this) ? this : asThis,
+            args.concat(args2))
     }
+    resultFunc.prototype = thatFunc.prototype;
+    return resultFunc;
 }
 
 //这里是 es6 的写法
 function _myBind(asThis,...args) {
     //this 就是使用 bind 的函数
-    const fn = this;
-    return function (...args2) {
-        return fn.call(asThis,...args,...args2)
+    const thatFunc = this;
+    function resultFunc(...args2) {
+        return thatFunc.call(
+            this instanceof resultFunc ? this : asThis,
+            ...args,
+            ...args2
+        )
     }
+    resultFunc.prototype = thatFunc.prototype;
+    return resultFunc;
 }
 
 

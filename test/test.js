@@ -1,8 +1,12 @@
 const myBind = require('../src/index')
 
-
-
-
+test1('myBind 可以使用')
+test2('this 绑定成功')
+test3('this p1 p2 绑定成功')
+test4('this 绑定成功，后传 p1 p2 绑定成功')
+test5('this 绑定成功，传 p1 绑定成功，再传 p2 绑定成功')
+test6('new 的时候绑定了 p1 p2')
+test7('new 的时候绑定了 p1 p2,并且 fn 有 prototype.sayhi')
 
 function test1(message){
     console.log(message);
@@ -56,13 +60,37 @@ function test5(message) {
     console.assert(anotherFn3(2)[2] === 2,'anotherfn3 2')
 }
 
-test1('myBind 可以使用')
-test2('this 绑定成功')
-test3('this p1 p2 绑定成功')
-test4('this 绑定成功，后传 p1 p2 绑定成功')
-test5('this 绑定成功，传 p1 绑定成功，再传 p2 绑定成功')
+function test6(message) {
+    console.log(message);
+
+    Function.prototype.myBind = myBind;
+    const fn = function (p1,p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+    }
+    const fn2 = fn.myBind(undefined,'x','y')
+    const object = new fn2()
+    console.assert(object.p1 === 'x')
+    console.assert(object.p2 === 'y')
+}
 
 
+function test7(message) {
+    console.log(message);
+
+    Function.prototype.myBind = myBind;
+    const fn = function (p1,p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+    }
+    fn.prototype.sayhi = function () { }
+    const fn2 = fn.myBind(undefined,'x','y')
+    const object = new fn2()
+    console.assert(object.p1 === 'x')
+    console.assert(object.p2 === 'y')
+    console.assert(fn.prototype.isPrototypeOf(object))
+    console.assert(typeof object.sayhi === 'function')
+}
 
 
 
