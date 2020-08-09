@@ -2,5 +2,10 @@
   "name": "bind",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "global": "^4.4.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  }
 }
