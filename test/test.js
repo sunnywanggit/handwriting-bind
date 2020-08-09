@@ -20,3 +20,30 @@ console.assert(newFn2()[0].name === 'wang')
 console.assert(newFn2()[1] === 1)
 console.assert(newFn2()[2] === 2)
 
+const anotherFn2 = fn2.myBind({name:'wang'})
+console.assert(anotherFn2(1,2)[0].name === 'wang')
+console.assert(anotherFn2(1,2)[1] === 1)
+console.assert(anotherFn2(1,2)[2] === 2)
+
+const anotherFn3 = fn2.myBind({name:'wang'},1)
+console.assert(anotherFn3(2)[0].name === 'wang')
+console.assert(anotherFn3(2)[1] === 1)
+console.assert(anotherFn3(2)[2] === 2,'anotherfn3 2')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
