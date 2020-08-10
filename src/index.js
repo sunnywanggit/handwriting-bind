@@ -1,4 +1,3 @@
-
 var slice = Array.prototype.slice;
 
 //这里是与 es6 等价的 es3 的写法
@@ -18,6 +17,7 @@ function myBind(asThis) {
             resultFunc.prototype.isPrototypeOf(this) ? this : asThis,
             args.concat(args2))
     }
+
     resultFunc.prototype = thatFunc.prototype;
     return resultFunc;
 }
@@ -28,11 +28,13 @@ function _myBind(asThis,...args) {
     const thatFunc = this;
     function resultFunc(...args2) {
         return thatFunc.call(
+            //支持new
             this instanceof resultFunc ? this : asThis,
             ...args,
             ...args2
         )
     }
+    // 支持 new
     resultFunc.prototype = thatFunc.prototype;
     return resultFunc;
 }
